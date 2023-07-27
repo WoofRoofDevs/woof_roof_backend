@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 const app = express();
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Applicati");
+  res.send("Application work!");
 });
 
 app.listen(3000, () => {
