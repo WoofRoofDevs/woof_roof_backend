@@ -3,7 +3,7 @@ import { vaccinationSchema } from "./Vaccination";
 import { petStatSchema } from "./PetStat";
 import { mediaFile } from "./MediaFile";
 
-const animalSchema = new Schema({
+export const animalSchema = new Schema({
   name: { type: String, required: true }, // Holly
   type: { type: String, required: true }, // Cat | dog
   gender: { type: String, required: true }, // male | female
