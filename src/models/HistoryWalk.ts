@@ -1,6 +1,6 @@
 import mongoose, { Schema, InferSchemaType } from "mongoose";
 
-const historyWalkSchema = new Schema({
+export const historyWalkSchema = new Schema({
   petName: { type: String, required: true },
   date: { type: Date, required: true },
   walkerName: { type: String, required: true },
