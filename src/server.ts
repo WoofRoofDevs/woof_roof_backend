@@ -1,9 +1,12 @@
 import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
 import { RequestLoggerModel } from "./models/RequestLogger";
 import { Request, Response } from "express";
 
 const app = express();
+
+app.use(cors());
 
 app.set("trust proxy", true);
 
