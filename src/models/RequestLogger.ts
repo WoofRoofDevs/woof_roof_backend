@@ -1,6 +1,6 @@
 import mongoose, { Schema, InferSchemaType } from "mongoose";
 
-const requestLogger = new Schema({
+const requestLoggerSchema = new Schema({
   ip: { type: String, required: true },
   city: { type: String, required: true },
   region: { type: String, required: true },
@@ -12,9 +12,9 @@ const requestLogger = new Schema({
   requestDate: { type: Date, required: true },
 });
 
-export type RequestLogger = InferSchemaType<typeof requestLogger>;
+export type RequestLogger = InferSchemaType<typeof requestLoggerSchema>;
 
 export const RequestLoggerModel = mongoose.model(
   "RequestLogger",
-  requestLogger,
+  requestLoggerSchema,
 );
