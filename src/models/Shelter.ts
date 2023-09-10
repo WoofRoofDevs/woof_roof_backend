@@ -1,8 +1,8 @@
 import mongoose, { Schema, InferSchemaType } from "mongoose";
 
-const shelter = new Schema({
+export const shelter = new Schema({
   name: { type: String, required: true },
-  location: { type: Object, required: true },
+  location: { type: String, required: true }, //chenge to obj
   creatorUid: { type: String, required: true },
 
   numberOfAnimals: { type: Number, required: false },

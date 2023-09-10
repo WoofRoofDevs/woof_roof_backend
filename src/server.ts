@@ -4,9 +4,42 @@ import mongoose from "mongoose";
 import { RequestLoggerModel } from "./models/RequestLogger";
 import { Request, Response } from "express";
 
+import { v4 as uuidv4 } from "uuid";
+import { ShelterModel } from "./models/Shelter";
+
 const app = express();
 
 app.use(cors());
+
+app.post("/shelters", express.json(), async (req: Request, res: Response) => {
+  const shelter = new ShelterModel({
+    name: req.body.name,
+    location: req.body.location,
+    creatorUid: uuidv4(),
+  });
+
+  const newShelter = await shelter.save();
+  res.statusCode = 201;
+  res.send(newShelter);
+});
+
+app.get("/shelters", express.json(), async (req: Request, res: Response) => {
+  const getAll = await ShelterModel.find({});
+  res.statusCode = 200;
+  res.send(getAll);
+});
+
+app.get(
+  "/shelters/:shelterId",
+  express.json(),
+  async (req: Request, res: Response) => {
+    const shelterId = req.params._id;
+
+    const findOne = await ShelterModel.findOne({ _id: shelterId }).exec();
+    res.statusCode = 200;
+    res.send(findOne);
+  },
+);
 
 app.set("trust proxy", true);
 
