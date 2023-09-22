@@ -6,38 +6,54 @@ import { Request, Response } from "express";
 
 import { v4 as uuidv4 } from "uuid";
 import { ShelterModel } from "./models/Shelter";
+import { AnimalModel } from "./models/Pet";
+import { json } from "stream/consumers";
 
 const app = express();
 
 app.use(cors());
 
 app.post("/shelters", express.json(), async (req: Request, res: Response) => {
-  const shelter = new ShelterModel({
-    name: req.body.name,
-    location: req.body.location,
-    creatorUid: uuidv4(),
-  });
+  try {
+    const shelter = new ShelterModel({
+      name: req.body.name,
+      location: req.body.location,
+      creatorUid: uuidv4(),
+      numberOfAnimals: req.body.numberOfAnimals,
+      numberOfSeats: req.body.numberOfSeats,
+    });
 
-  const newShelter = await shelter.save();
-  res.statusCode = 201;
-  res.send(newShelter);
+    const newShelter = await shelter.save();
+    res.json(newShelter);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Shelter wasn`t created" });
+  }
 });
 
 app.get("/shelters", express.json(), async (req: Request, res: Response) => {
-  const getAll = await ShelterModel.find({});
-  res.statusCode = 200;
-  res.send(getAll);
+  try {
+    const getAll = await ShelterModel.find({});
+    res.json(getAll);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
 });
 
 app.get(
   "/shelters/:shelterId",
   express.json(),
   async (req: Request, res: Response) => {
-    const shelterId = req.params._id;
+    try {
+      const shelterId = req.params.shelterId;
 
-    const findOne = await ShelterModel.findOne({ _id: shelterId }).exec();
-    res.statusCode = 200;
-    res.send(findOne);
+      const findOne = await ShelterModel.findById(shelterId);
+      res.json(findOne);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Something went wrong" });
+    }
   },
 );
 

@@ -13,8 +13,8 @@ export const animalSchema = new Schema({
   stats: [{ type: petStatSchema, required: true }],
   description: { type: String, required: true },
   avatarUrl: { type: String, required: true }, //url
-  mediaGallery: [{ type: mediaFile, required: false }],
 
+  mediaGallery: [{ type: mediaFile, required: false }],
   birthDate: { type: Date, required: false },
   vaccinations: [{ type: vaccinationSchema, required: false }],
   sterilization: { type: Date, required: false },
