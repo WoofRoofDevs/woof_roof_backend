@@ -1,6 +1,6 @@
 import mongoose, { Schema, InferSchemaType } from "mongoose";
 
-const shelter = new Schema({
+export const shelter = new Schema({
   name: { type: String, required: true },
   location: { type: Object, required: true },
   creatorUid: { type: String, required: true },
