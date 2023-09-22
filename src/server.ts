@@ -57,6 +57,58 @@ app.get(
   },
 );
 
+app.post("/animals", express.json(), async (req: Request, res: Response) => {
+  try {
+    const animal = new AnimalModel({
+      name: req.body.name,
+      type: req.body.type,
+      gender: req.body.gender,
+      shelterSettlmentDate: req.body.shelterSettlmentDate,
+      adoptionDate: req.body.adoptionDate,
+      weight: req.body.weight,
+      stats: req.body.stats,
+      description: req.body.description,
+      avatarUrl: req.body.avatarUrl,
+      mediaGallery: req.body.mediaFile,
+      birthDate: req.body.birthDate,
+      vaccinations: req.body.vaccinations,
+      sterilization: req.body.sterilization,
+    });
+
+    const newAnimal = await animal.save();
+    res.json(newAnimal);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Animal wasn`t added" });
+  }
+});
+
+app.get("/animals", express.json(), async (req: Request, res: Response) => {
+  try {
+    const getAll = await AnimalModel.find({});
+    res.json(getAll);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Can`t get shelters" });
+  }
+});
+
+app.get(
+  "/animals/:animalId",
+  express.json(),
+  async (req: Request, res: Response) => {
+    try {
+      const animalId = req.params.animalId;
+
+      const findOne = await AnimalModel.findById(animalId);
+      res.json(findOne);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Something went wrong" });
+    }
+  },
+);
+
 app.set("trust proxy", true);
 
 app.get("/", async (req: Request, res: Response) => {
